@@ -2,9 +2,11 @@ package com.vehiculerental.vehiclesapi.controller;
 
 import com.vehiculerental.vehiclesapi.dao.VehicleDao;
 import com.vehiculerental.vehiclesapi.model.Vehicle;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -34,11 +36,21 @@ public class VehicleController {
         return vehicle;
 
     }
+
+    @PostMapping(value = "/vehicles/maximum-horse-power")
+    public List<Vehicle> getVehiclesWithMaximumHorsePower(@RequestBody Integer horsePower) {
+
+        return vehicleDao.findByHorsePowerLessThan(horsePower);
+
+    }
+
+
     @PostMapping(value = "/vehicles")
     public Vehicle createVehicle(@RequestBody Vehicle vehicle){
         vehicle.setId(vehicle.getId().toLowerCase());
         vehicle.setCreatedAt(new Date());
         vehicle.setUpdatedAt(new Date());
+
         return vehicleDao.save(vehicle);
 
     }
