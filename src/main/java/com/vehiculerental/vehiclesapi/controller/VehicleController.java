@@ -42,5 +42,54 @@ public class VehicleController {
         return vehicleDao.save(vehicle);
 
     }
+    @PutMapping(value = "/vehicles/{id}")
+    public Vehicle updateVehicle(@PathVariable String id,  @RequestBody Vehicle vehicle, HttpServletResponse response){
+
+        Vehicle vehicleToEdit = null;
+        try {
+            vehicleToEdit = vehicleDao.findById(id).orElseThrow(()-> new Exception());
+        } catch (Exception e) {
+            response.setStatus(HttpStatus.NO_CONTENT.value());
+        }
+
+        if (vehicleToEdit != null) {
+
+            if (vehicle.getBrand() != null) {
+                vehicleToEdit.setBrand(vehicle.getBrand());
+            }
+            if (vehicle.getType() != null) {
+                vehicleToEdit.setType(vehicle.getType());
+            }
+            if (vehicle.getColor() != null) {
+                vehicleToEdit.setColor(vehicle.getColor());
+            }
+            if (vehicle.getBasePrice() != null) {
+                vehicleToEdit.setBasePrice(vehicle.getBasePrice());
+            }
+            if (vehicle.getKmPrice() != null) {
+                vehicleToEdit.setKmPrice(vehicle.getKmPrice());
+            }
+            if (vehicle.getHorsePower() != null) {
+                vehicleToEdit.setHorsePower(vehicle.getHorsePower());
+            }
+
+                vehicleToEdit.setUpdatedAt(new Date());
+
+        }
+        return vehicleDao.saveAndFlush(vehicleToEdit);
+    }
+
+    @DeleteMapping (value = "/vehicles/{id}")
+    public void deleteVehicle(@PathVariable String id, HttpServletResponse response) {
+
+        Vehicle vehicleToDelete =  null;
+        try {
+            vehicleToDelete = vehicleDao.findById(id).orElseThrow(()-> new Exception());
+        } catch (Exception e) {
+            response.setStatus(HttpStatus.NO_CONTENT.value());
+        }
+
+        vehicleDao.delete(vehicleToDelete);
+    }
 
 }

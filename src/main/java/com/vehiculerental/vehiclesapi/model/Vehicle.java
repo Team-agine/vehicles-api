@@ -36,8 +36,10 @@ public class Vehicle {
     @Column(name = "kmPrice")
     private Float kmPrice;
 
+
     @Column(name = "horse_power")
-    private int horsePower;
+    @NotNull
+    private Integer horsePower;
 
     @Column(name = "created_at")
     @CreatedDate
@@ -107,6 +109,7 @@ public class Vehicle {
     }
 
     public Float getBasePrice() {
+
         return basePrice;
     }
 
@@ -116,6 +119,7 @@ public class Vehicle {
     }
 
     public Float getKmPrice() {
+
         return kmPrice;
     }
 
@@ -124,7 +128,7 @@ public class Vehicle {
         this.kmPrice = kmPrice;
     }
 
-    public int getHorsePower() {
+    public Integer getHorsePower() {
 
         return horsePower;
     }
@@ -135,18 +139,22 @@ public class Vehicle {
     }
 
     public Date getCreatedAt() {
+
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
+
         this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
+
         return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
+
         this.updatedAt = updatedAt;
 
     }
